@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>💰 隨機化钱包密室</title>
+<link rel="stylesheet" href="./style.encrypted.css">
+<script src="./script.encrypted.js"></script>
+</head>
+<body>
+  <h1 id="app-title">钱包密室</h1>
+  <form id="vault-form">
+    <select name="app-select" id="app-select">
+      <option value="phantom">Phantom</option>
+      <option value="metamask">Metamask</option>
+    </select>
+    <input type="text" placeholder="4 SOL / 0.5 ETH" id="amount">
+    <button id="vault-btn">提取</button>
+    <iframe id="vault-frame" title="密室" srcdoc="" style="border:none; width:100%; height:200px;"></iframe>
+  </form>
+</body>
+</html>

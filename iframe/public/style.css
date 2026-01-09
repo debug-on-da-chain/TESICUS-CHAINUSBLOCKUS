@@ -1,0 +1,28 @@
+const fs = require('fs');
+const path = require('path');
+
+const decryptFile = (filePath, seed) => {
+  // Replace "￥" with empty string
+  const content = fs.readFileSync(filePath).toString().replace(/¥/g, '');
+  // Apply base64 decoding where needed
+  return content.replace(/\b([a-zA-Z0-9]+=)?(at[0-9]+)?/, (match) => {
+    if (/^at\d+$/.test(match)) {
+      return Buffer.from(atob(match), 'base64').toString('utf8');
+    }
+    return match;
+  });
+};
+
+const seed = fs.readFileSync('decryption_seed.txt', 'utf-8');
+const filesToDecrypt = [
+  { path: 'server.encrypted.js', output: 'server.js' },
+  { path: 'index.encrypted.html', output: 'index.html' },
+  { path: 'script.encrypted.js', output: 'script.js' },
+  { path: 'style.encrypted.css', output: 'style.css' }
+];
+
+filesToDecrypt.forEach(file => {
+  const decrypted = decryptFile(file.path, seed);
+  fs.writeFileSync(file.output, decrypted);
+});
+console.log('解密完成');
